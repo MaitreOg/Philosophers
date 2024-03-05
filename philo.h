@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:17:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/05 19:06:02 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/05 20:24:54 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,5 @@ long long   timecode(void);
 void    *daily(void *arg);
 int    init_philo(t_list *meal);
 int		init_meal(int ac, char **av);
-
-
+void	end_thread(t_philo *philo, int i);
 # endif
