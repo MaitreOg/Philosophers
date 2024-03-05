@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:17:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/05 17:22:50 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/05 19:06:02 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_list
     int t_sleep;
     int t_day;
     int target;
+    int in_process;
+    pthread_mutex_t mutex_in_process;
 	pthread_mutex_t	*fork;
 }           t_list;
 
@@ -38,13 +40,14 @@ typedef struct s_philo
     pthread_t  id;
 	pthread_mutex_t	eaten;
 	pthread_mutex_t	time_last_eat;
-    t_list          value; 
+    t_list          *value; 
 }               t_philo;
 
 int			ft_atoi(char *nptr);
 long long   timecode(void);
 void    *daily(void *arg);
 int    init_philo(t_list *meal);
+int		init_meal(int ac, char **av);
 
 
 # endif
