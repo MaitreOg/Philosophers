@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:25:24 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/04 19:49:26 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/05 17:22:33 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main (int ac, char **av)
 	meal->t_die = ft_atoi(av[2]);
 	meal->t_eat = ft_atoi(av[3]);
 	meal->t_sleep = ft_atoi(av[4]);
+	meal->t_day = meal->t_sleep + meal->t_eat;
 	if (ac == 6)
 		meal->target = ft_atoi(av[5]);
 	init_philo(meal);

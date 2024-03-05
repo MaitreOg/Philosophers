@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:17:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/04 19:47:58 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/05 17:22:50 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_list
     int t_die;
     int t_eat;
     int t_sleep;
+    int t_day;
     int target;
 	pthread_mutex_t	*fork;
 }           t_list;

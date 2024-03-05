@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 21:31:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/04 19:56:29 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/05 17:06:24 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int    init_philo(t_list *meal)
     meal->fork = malloc(sizeof (pthread_mutex_t) * meal->n_philo);
     while (i < meal->n_philo)
     {
-        printf("%d\n", i);
         philo[i].number = i + 1;
+        printf("%d\n", philo[i].number);
         philo[i].last_eat = timecode();
         philo[i].n_eat = 0;
         philo[i].value = *meal;
