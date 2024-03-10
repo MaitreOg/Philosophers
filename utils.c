@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 21:49:41 by smarty            #+#    #+#             */
-/*   Updated: 2024/02/02 22:30:57 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/10 18:23:12 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,20 @@ int	ft_atoi(char *nptr)
 		i++;
 	}
 	return (result * signe);
+}
+
+void	print_status(t_philo *philo, char *status)
+{
+	long long	time;
+
+	time = timecode() - philo->value->time_lunch;
+	printf("%lld %d %s\n", time, philo->number, status);
+}
+
+void	print_eat(t_philo *philo, char *status, long long time)
+{
+	long long	time_p;
+
+	time_p = time - philo->value->time_lunch;
+	printf("%lld %d %s\n", time_p, philo->number, status);
 }

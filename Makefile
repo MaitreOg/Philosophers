@@ -5,7 +5,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRCS = init.c  main.c utils.c philo.c
+SRCS = init.c thread.c main.c utils.c philo.c
 
 OBJECTS = $(SRCS:.c=.o) 
 

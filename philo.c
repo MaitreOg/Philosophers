@@ -6,46 +6,75 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:19:15 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/05 20:33:34 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/10 18:03:50 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void    take_forks(t_philo *philo, int l_fork, int r_fork)
+void	dead(t_philo *philo)
 {
-	pthread_mutex_lock(&(philo->value->fork[r_fork]));
-	printf("philo %d has taken a fork\n", philo->number);
-	pthread_mutex_lock(&(philo->value->fork[l_fork]));
-	printf("philo %d has taken a fork\n", philo->number);
+	print_status(philo, "is dead");
+	pthread_mutex_lock(&philo->value->is_alive_mutex);
+	philo->value->is_alive = 0;
+	pthread_mutex_unlock(&philo->value->is_alive_mutex);
+}
+void	alive_and_hungry(t_philo  *philo)
+{
+	int	i;
+	int	bool;
+
+	while(1)
+	{
+		i = -1;
+		bool = 1;
+		while(++i < philo->value->n_philo)
+		{
+			pthread_mutex_lock(&(philo->time_last_eat));
+			if (timecode() - philo[i].last_eat > philo->value->t_die)
+			{
+				dead(&philo[i]);
+				exit(0);
+			}
+			pthread_mutex_unlock(&(philo->time_last_eat));
+			pthread_mutex_lock(&(philo->eaten));
+			if (philo->value->target > philo[i].n_eat && philo->value->target != -1)
+				bool = 0;
+			if (philo->value->target == -1)
+				bool = 0;
+			pthread_mutex_unlock(&(philo->eaten));
+		}
+		pthread_mutex_lock(&(philo->value->mutex_stop));
+		if (bool == 1)
+		{
+			philo->value->stop_meal = 1;
+			usleep((philo->value->t_day + 10) * 1000);
+			exit(0);
+		}
+		pthread_mutex_unlock(&(philo->value->mutex_stop));
+	}
+
 	
-}
-
-void	eat(t_philo *philo, int l_fork, int r_fork)
-{
-	pthread_mutex_lock(&(philo->eaten));
-	philo->n_eat += 1;
-	printf("philo %d is eaten\n", philo->number);
-	pthread_mutex_unlock(&(philo->eaten));
-	pthread_mutex_lock(&(philo->time_last_eat));
-	philo->last_eat = timecode();
-	pthread_mutex_unlock(&(philo->time_last_eat));
-	pthread_mutex_unlock(&(philo->value->fork[r_fork]));
-	pthread_mutex_unlock(&(philo->value->fork[l_fork]));
-}
-
-void	bed(t_philo	*philo, int i)
-{
-	printf("philo %d is sleeping\n", i);
-	usleep(philo->value->t_sleep);
 }
 
 void	end_thread(t_philo *philo, int i)
 {
 	while (--i > 0)
-	{
 		pthread_join(philo[i].id, NULL);
+	i = -1;
+	pthread_mutex_destroy(&(philo->value->routine));
+	pthread_mutex_destroy(&(philo->value->is_alive_mutex));
+	pthread_mutex_destroy(&(philo->value->mutex_stop));
+	pthread_mutex_destroy(&(philo->eaten));
+	pthread_mutex_destroy(&(philo->time_last_eat));
+	while (++i < philo->value->n_philo)
+	{
+		pthread_mutex_destroy(&(philo->value->fork[i]));
+		free(&philo->value->fork[i]);
+		free(&philo[i]);
 	}
+	free(philo->value);
+	
 }
 
 void    *daily(void *arg)
@@ -60,19 +89,19 @@ void    *daily(void *arg)
 	if (l_fork < 0)
 		l_fork = philo->value->n_philo - 1;
 	if (philo->number % 2 == 0)
-		usleep(philo->value->t_day + 100);
-	while (1)
+		usleep(philo->value->t_day * 1000);
+	while (philo->value->stop_meal == 0)
 	{
+		pthread_mutex_lock(&(philo->value->routine));
 		take_forks(philo, l_fork, r_fork);
 		eat(philo, l_fork, r_fork);
-		bed(philo, philo->number);
-		printf("philo %d is thinking\n", philo->number);
-		pthread_mutex_lock(&(philo->value->mutex_in_process));
-		if (!philo->value->in_process)
+		bed(philo);
+		pthread_mutex_lock(&(philo->value->is_alive_mutex));
+		if (philo->value->is_alive == 0)
 			break;
-		pthread_mutex_unlock(&(philo->value->mutex_in_process));
-		usleep(50);
+		pthread_mutex_unlock(&(philo->value->is_alive_mutex));
 	}
-	pthread_mutex_unlock(&(philo->value->mutex_in_process));
+	pthread_mutex_unlock(&(philo->value->routine));
+	pthread_mutex_unlock(&(philo->value->is_alive_mutex));
 	return(NULL);
 }
