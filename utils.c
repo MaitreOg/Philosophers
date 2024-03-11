@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 21:49:41 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/10 18:23:12 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:25:47 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@ long long   timecode(void)
     
     gettimeofday(&tv, NULL);
     return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+void	wait_next(int target)
+{
+	long long	time;
+
+	time = timecode();
+	while (1)
+	{
+		if (timecode() - time >= target)
+			break;
+	}
 }
 
 int	ft_atoi(char *nptr)

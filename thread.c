@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:28:10 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/10 18:31:31 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:27:08 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	eat(t_philo *philo, int l_fork, int r_fork)
 	philo->last_eat = timecode();
 	pthread_mutex_unlock(&(philo->time_last_eat));
 	pthread_mutex_unlock(&(philo->value->routine));
-    usleep(philo->value->t_eat * 1000);
+    wait_next(philo->value->t_eat);
 	pthread_mutex_unlock(&(philo->value->fork[r_fork]));
 	pthread_mutex_unlock(&(philo->value->fork[l_fork]));
 }
@@ -40,7 +40,7 @@ void	eat(t_philo *philo, int l_fork, int r_fork)
 void	bed(t_philo	*philo)
 {
 	print_status(philo, "is sleeping");
-	usleep(philo->value->t_sleep * 1000);
+    wait_next(philo->value->t_sleep);
 	print_status(philo, "is thinking");
 
 }

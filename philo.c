@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:19:15 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/10 18:03:50 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:33:31 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void    *daily(void *arg)
 	if (l_fork < 0)
 		l_fork = philo->value->n_philo - 1;
 	if (philo->number % 2 == 0)
-		usleep(philo->value->t_day * 1000);
+		usleep(philo->value->t_eat * 1000);
 	while (philo->value->stop_meal == 0)
 	{
 		pthread_mutex_lock(&(philo->value->routine));
