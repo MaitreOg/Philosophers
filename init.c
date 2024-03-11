@@ -6,18 +6,18 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 21:31:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/10 18:06:08 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/11 21:46:13 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		init_meal(int ac, char **av)
+int	init_meal(int ac, char **av)
 {
 	t_list	*meal;
-	int	i;
+	int		i;
 
-	i = -1;	
+	i = -1;
 	meal = malloc(sizeof(t_list));
 	meal->n_philo = ft_atoi(av[1]);
 	meal->t_die = ft_atoi(av[2]);
@@ -35,16 +35,15 @@ int		init_meal(int ac, char **av)
 	while (++i < meal->n_philo)
 		pthread_mutex_init(&(meal->fork[i]), NULL);
 	pthread_mutex_init(&(meal->is_alive_mutex), NULL);
-	pthread_mutex_init(&(meal->routine), NULL);
 	pthread_mutex_init(&(meal->mutex_stop), NULL);
 	init_philo(meal);
-	return(0);
+	return (0);
 }
 
 void	init_philo(t_list *meal)
 {
-	int i;
-	t_philo *philo;
+	int		i;
+	t_philo	*philo;
 
 	i = -1;
 	philo = malloc(sizeof(t_philo) * meal->n_philo);
@@ -66,5 +65,6 @@ void	init_philo(t_list *meal)
 	}
 	alive_and_hungry(philo);
 	pthread_mutex_unlock(&(philo->value->mutex_stop));
-	return (end_thread(philo, i));
+	end_thread(philo);
+	return (free(meal));
 }

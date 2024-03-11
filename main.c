@@ -6,13 +6,13 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:25:24 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/08 20:45:54 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/11 21:35:16 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main (int ac, char **av)
+int	main(int ac, char **av)
 {
 	if (ac != 5 && ac != 6)
 	{
@@ -21,4 +21,5 @@ int	main (int ac, char **av)
 	}
 	if (init_meal(ac, av) == -1)
 		return (-1);
+	
 }

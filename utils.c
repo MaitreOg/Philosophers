@@ -6,19 +6,20 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 21:49:41 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/11 18:25:47 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/11 20:53:03 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long   timecode(void)
+long long	timecode(void)
 {
-    struct timeval  tv;
-    
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
+
 void	wait_next(int target)
 {
 	long long	time;
@@ -27,7 +28,7 @@ void	wait_next(int target)
 	while (1)
 	{
 		if (timecode() - time >= target)
-			break;
+			break ;
 	}
 }
 
