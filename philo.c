@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:19:15 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/12 17:15:31 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/13 19:29:54 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,17 @@ void	alive_and_hungry(t_philo *philo)
 		while (++i < philo->value->n_philo)
 		{
 			if (alive(philo, i) == 0)
+			{
+				pthread_mutex_destroy(&(philo->value->is_alive_mutex));
+				pthread_mutex_destroy(&(philo->value->mutex_stop));
+				pthread_mutex_destroy(&(philo->eaten));
+				pthread_mutex_destroy(&(philo->time_last_eat));
+				while (++i < philo->value->n_philo)
+					pthread_mutex_destroy(&(philo->value->fork[i]));
+				free(philo->value->fork);
+				free(philo);
 				exit (0);
+			}
 			pthread_mutex_lock(&(philo->eaten));
 			if (philo->value->target > philo[i].n_eat && \
 						philo->value->target != -1)
