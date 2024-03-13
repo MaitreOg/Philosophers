@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:17:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/11 21:48:02 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/12 17:07:00 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void		eat(t_philo *philo, int l_fork, int r_fork);
 void		bed(t_philo	*philo);
 void		print_status(t_philo *philo, char *status);
 void		alive_and_hungry(t_philo *philo);
-void		print_eat(t_philo *philo, char *status, long long time);
 void		wait_next(int target);
 void		dead(t_philo *philo);
 #endif
