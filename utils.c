@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 21:49:41 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/12 17:06:45 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/18 21:51:07 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ void	print_status(t_philo *philo, char *status)
 	long long	time;
 
 	time = timecode() - philo->value->time_lunch;
-	printf("%lld\t%d %s\n", time, philo->number, status);
+	pthread_mutex_lock(&(philo->value->is_alive_mutex));
+	if (philo->value->is_alive_txt)
+		printf("%lld\t%d %s\n", time, philo->number, status);
+	pthread_mutex_unlock(&(philo->value->is_alive_mutex));
 }
 

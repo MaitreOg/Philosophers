@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 21:31:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/11 21:46:13 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/18 21:50:31 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,16 @@ void	init_philo(t_list *meal)
 	i = -1;
 	philo = malloc(sizeof(t_philo) * meal->n_philo);
 	meal->is_alive = 1;
+	meal->is_alive_txt = 1;
 	meal->time_lunch = timecode();
+	pthread_mutex_init(&(meal->eaten), NULL);
+	pthread_mutex_init(&(meal->time_last_eat), NULL);
 	while (++i < meal->n_philo)
 	{
 		philo[i].number = i + 1;
 		philo[i].last_eat = timecode();
 		philo[i].n_eat = 0;
 		philo[i].value = meal;
-		pthread_mutex_init(&(philo[i].eaten), NULL);
-		pthread_mutex_init(&(philo[i].time_last_eat), NULL);
 		if (pthread_create(&(philo[i].id), NULL, &daily, &(philo[i])))
 		{
 			write(1, "pthread_create failed\n", 22);
@@ -64,7 +65,6 @@ void	init_philo(t_list *meal)
 		}
 	}
 	alive_and_hungry(philo);
-	pthread_mutex_unlock(&(philo->value->mutex_stop));
 	end_thread(philo);
 	return (free(meal));
 }

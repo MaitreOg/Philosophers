@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:17:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/12 17:07:00 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/18 21:50:11 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ typedef struct s_list
 	int				t_day;
 	int				target;
 	int				is_alive;
+	int				is_alive_txt;
 	int				stop_meal;
 	pthread_mutex_t	is_alive_mutex;
 	pthread_mutex_t	mutex_stop;
 	pthread_mutex_t	*fork;
+	pthread_mutex_t	eaten;
+	pthread_mutex_t	time_last_eat;
 }		t_list;
 
 typedef struct s_philo
@@ -41,8 +44,6 @@ typedef struct s_philo
 	long long		last_eat;
 	int				n_eat;
 	pthread_t		id;
-	pthread_mutex_t	eaten;
-	pthread_mutex_t	time_last_eat;
 	t_list			*value;
 }		t_philo;
 
@@ -52,9 +53,9 @@ void		*daily(void *arg);
 void		init_philo(t_list *meal);
 int			init_meal(int ac, char **av);
 void		end_thread(t_philo *philo);
-void		take_forks(t_philo *philo, int l_fork, int r_fork);
+int			take_forks(t_philo *philo, int l_fork, int r_fork);
 void		eat(t_philo *philo, int l_fork, int r_fork);
-void		bed(t_philo	*philo);
+int			bed(t_philo	*philo);
 void		print_status(t_philo *philo, char *status);
 void		alive_and_hungry(t_philo *philo);
 void		wait_next(int target);
