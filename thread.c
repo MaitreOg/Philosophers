@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:28:10 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/18 21:50:49 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/18 22:03:56 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	eat(t_philo *philo, int l_fork, int r_fork)
 }
 
 int	bed(t_philo	*philo)
-{		
+{
 	print_status(philo, "is sleeping");
 	wait_next(philo->value->t_sleep);
 	print_status(philo, "is thinking");

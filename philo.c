@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:19:15 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/18 21:53:21 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/18 22:01:24 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	*daily(void *arg)
 	if (l_fork < 0)
 		l_fork = philo->value->n_philo - 1;
 	if (philo->number % 2)
-		usleep(philo->value->t_eat * 1000);
+		usleep(philo->value->t_eat * 500);
 	while (1)
 	{
 		take_forks(philo, l_fork, r_fork);
@@ -108,9 +108,9 @@ void	*daily(void *arg)
 		bed(philo);
 		pthread_mutex_lock(&(philo->value->is_alive_mutex));
 		if (philo->value->is_alive == 0)
-			return(pthread_mutex_unlock(&(philo->value->is_alive_mutex)), NULL);
+			return (pthread_mutex_unlock(&(philo->value->is_alive_mutex)), \
+					NULL);
 		pthread_mutex_unlock(&(philo->value->is_alive_mutex));
 		usleep (10);
 	}
-	return (NULL);
 }
