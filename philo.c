@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:19:15 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/18 22:01:24 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/19 18:38:15 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int	hungry(t_philo *philo, int bool)
 	{
 		philo->value->stop_meal = 1;
 		usleep((philo->value->t_day + 10) * 1000);
+		pthread_mutex_lock(&philo->value->is_alive_mutex);
+		philo->value->is_alive = 0;
+		pthread_mutex_unlock(&philo->value->is_alive_mutex);
 		pthread_mutex_unlock(&(philo->value->mutex_stop));
 		return (0);
 	}
@@ -61,12 +64,7 @@ void	alive_and_hungry(t_philo *philo)
 			pthread_mutex_unlock(&(philo->value->eaten));
 		}
 		if (hungry(philo, bool) == 0)
-		{
-			pthread_mutex_lock(&philo->value->is_alive_mutex);
-			philo->value->is_alive = 0;
-			pthread_mutex_unlock(&philo->value->is_alive_mutex);
 			return ;
-		}
 	}
 }
 
