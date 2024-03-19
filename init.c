@@ -6,11 +6,18 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 21:31:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/19 19:41:33 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/19 19:45:26 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	init_meal2(t_list *meal)
+{
+	pthread_mutex_init(&(meal->is_alive_mutex), NULL);
+	pthread_mutex_init(&(meal->mutex_stop), NULL);
+	init_philo(meal);
+}
 
 void	init_meal(int ac, char **av)
 {
@@ -38,9 +45,7 @@ void	init_meal(int ac, char **av)
 		return ;
 	while (++i < meal->n_philo)
 		pthread_mutex_init(&(meal->fork[i]), NULL);
-	pthread_mutex_init(&(meal->is_alive_mutex), NULL);
-	pthread_mutex_init(&(meal->mutex_stop), NULL);
-	init_philo(meal);
+	init_meal2(meal);
 }
 
 void	init_philo(t_list *meal)
