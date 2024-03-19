@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:17:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/18 21:50:11 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/19 19:18:02 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int			ft_atoi(char *nptr);
 long long	timecode(void);
 void		*daily(void *arg);
 void		init_philo(t_list *meal);
-int			init_meal(int ac, char **av);
+void			init_meal(int ac, char **av);
 void		end_thread(t_philo *philo);
 int			take_forks(t_philo *philo, int l_fork, int r_fork);
 void		eat(t_philo *philo, int l_fork, int r_fork);
@@ -60,4 +60,5 @@ void		print_status(t_philo *philo, char *status);
 void		alive_and_hungry(t_philo *philo);
 void		wait_next(int target);
 void		dead(t_philo *philo);
+void		one_philo(t_list *meal);
 #endif

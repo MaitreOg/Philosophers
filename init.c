@@ -6,23 +6,27 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 21:31:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/18 21:50:31 by smarty           ###   ########.fr       */
+/*   Updated: 2024/03/19 19:41:33 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_meal(int ac, char **av)
+void	init_meal(int ac, char **av)
 {
 	t_list	*meal;
 	int		i;
 
 	i = -1;
 	meal = malloc(sizeof(t_list));
-	meal->n_philo = ft_atoi(av[1]);
 	meal->t_die = ft_atoi(av[2]);
 	meal->t_eat = ft_atoi(av[3]);
 	meal->t_sleep = ft_atoi(av[4]);
+	meal->n_philo = ft_atoi(av[1]);
+	if (meal->n_philo == 1)
+		return (one_philo(meal));
+	else if (meal->n_philo == 0)
+		return ;
 	meal->t_day = meal->t_sleep + meal->t_eat;
 	meal->stop_meal = 0;
 	if (ac == 6)
@@ -31,13 +35,12 @@ int	init_meal(int ac, char **av)
 		meal->target = -1;
 	meal->fork = malloc(sizeof(pthread_mutex_t) * meal->n_philo);
 	if (!meal->fork || meal->target == 0)
-		return (-1);
+		return ;
 	while (++i < meal->n_philo)
 		pthread_mutex_init(&(meal->fork[i]), NULL);
 	pthread_mutex_init(&(meal->is_alive_mutex), NULL);
 	pthread_mutex_init(&(meal->mutex_stop), NULL);
 	init_philo(meal);
-	return (0);
 }
 
 void	init_philo(t_list *meal)
